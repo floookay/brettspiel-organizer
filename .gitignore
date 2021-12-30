@@ -1,0 +1,6 @@
+.directory
+
+carcassonne/scad/*
+carcassonne/stl/*
+
+__pycache__
