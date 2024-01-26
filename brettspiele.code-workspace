@@ -2,10 +2,10 @@
 	"folders": [
 		{
 			"path": "."
-		},
-		{
-			"path": "../tmb-organizers"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"stlViewer.showAxes": true,
+		"stlViewer.showGrid": false,
+	}
 }
