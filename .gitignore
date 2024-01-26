@@ -1,7 +1,14 @@
+#general
 .directory
+__pycache__
 
+#generated files
 carcassonne/scad/*
 */stl/*
 */*/stl/*
 
-__pycache__
+#symlinks
+*/gridfinity-rebuilt-openscad
+
+#other foreign files
+*/svg/*
