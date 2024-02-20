@@ -31,12 +31,12 @@ wt=1.6;	// thickness of the holder side walls (must be a multiple of the nozzle 
 cutout = true;	// cutout at the bottom for card retrieval
 
 // length of the holder - set either variable
-lh=212.6;	// total length of the holder (space for cards will be calculated)
+lh=0;	// total length of the holder (space for cards will be calculated)
 lc=0;	// space for the cards (total length of the holder will be calculated)
-lfd = [];	// spacing between the fixed parameters
+lfd = [10,10,10,9,5,100];	// spacing between the fixed parameters (height of the card stack on a desk (with leeway))
 
 // width of the holder - optional
-wh=107;	// total width of the holder
+wh=0;	// total width of the holder
 
 // height of the holder - set either variable
 hh=57;	// total height of the holder
@@ -44,7 +44,7 @@ ha=0;	// angle of the cards in the holder (in degrees, over 45 degrees for)
 
 // divider
 dividers = false;
-d=3;	// thickness of the divider
+d=3;	// thickness of the divider (measured horizontally = multiple of the nozzle size)
 dsh=20;	// height of the divider slot
 dsl=1;	// divider slot leeway
 dg=15;	// divider gap / spacing
@@ -66,15 +66,15 @@ echo(angle=a);
 // you don't have to change anything below here if you just want to generate some card holders
 // if you want to further customize the card holders, start here
 // size calculations
-h = hh > 0 ? hh : sin(ha)*csw + b;	// calculated total height of the holder
+h = hh > 0 ? hh : sin(ha)*csw+b;	// calculated total height of the holder
 a = ha > 0 ? ha : asin((h-b)/csw);	// calculated angle for the cards (based on the available vertical space)
 l = lh > 0	// calculated total length of the holder
 	? lh
 	: lc > 0
-		? lw + lc + cos(a)*csw + lw
-		: lw + ([for(p=lfd) 1]*lfd + (len(lfd)-1)*d)/sin(a) + cos(a)*csw + lw;
-w = wh > 0 ? wh : wt + csl + wt;	// calculated total width of the holder
-ww = wh == 0 ? wt : (wh - csl)/2;	// calculated wall thickness for the sides
+		? lw+lc+cos(a)*csw+lw
+		: lw+([for(p=lfd) 1]*lfd)/sin(a)+(len(lfd)-1)*d+cos(a)*csw+lw;
+w = wh > 0 ? wh : wt+csl+wt;	// calculated total width of the holder
+ww = wh == 0 ? wt : (wh-csl)/2;	// calculated wall thickness for the sides
 cl = lc > 0 ? lc : l-lw-cos(a)*csw-lw;	// calculated total length of the card compartment
 rhombus_faces = [[0,1,2,3],[4,5,1,0],[7,6,5,4],[5,6,2,1],[6,7,3,2],[7,4,0,3]];	// faces for the rhombus polyhedrons
 
@@ -123,7 +123,7 @@ fixed_divider_points = [
 	[xsfd,0,zfd],[d+xsfd,0,zfd],[d+xsfd,csl,zfd],[xsfd,csl,zfd] // shifted top points
 ];
 module fixed_divider() {
-	translate(v = [lw+d/sin(a),ww,0]) polyhedron(points=fixed_divider_points, faces=rhombus_faces);
+	translate(v = [0,ww,0]) polyhedron(points=fixed_divider_points, faces=rhombus_faces);
 }
 
 // groove
@@ -162,12 +162,13 @@ module card_holder() {
 			if(len(lfd) > 0) {
 				// calculating the offsets
 				ofs = [
-					for (o = 0, i = 0; i < len(lfd); o = o + (lfd[i] + d)/sin(a), i = i + 1)
-						o + lfd[i]
+					for (o = 0, i = 0; i < len(lfd); o = o+(lfd[i])/sin(a)+d, i = i+1)
+						o+lfd[i]/sin(a)
 				];
 				for (i = ofs) {
-					echo(i);
-					translate(v = [i,0,0]) fixed_divider();
+					if(i != ofs[len(ofs)-1]) {
+						translate(v = [lw-b/tan(a)+i,0,0]) fixed_divider();
+					}
 				}
 			}
 		}
