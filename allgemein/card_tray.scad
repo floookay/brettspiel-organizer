@@ -20,8 +20,8 @@
 $fn=200;	// for rendering
 // $fn=20;	// for previewing
 
-csl=45;	// card size length (with leeway)
-csw=68;	// card size width (with leeway)
+csl=90;	// card size length (with leeway)
+csw=71;	// card size width (with leeway)
 
 // basic parameters
 r = 3;	// radius of the corners of the holder 
@@ -31,12 +31,12 @@ wt=1.6;	// thickness of the holder side walls (must be a multiple of the nozzle 
 cutout = true;	// cutout at the bottom for card retrieval
 
 // length of the holder - set either variable
-lh=0;	// total length of the holder (space for cards will be calculated)
+lh=212.6;	// total length of the holder (space for cards will be calculated)
 lc=0;	// space for the cards (total length of the holder will be calculated)
-lfd = [13,13,13,13,13,13,13,13,13,13,13];	// spacing between the fixed parameters
+lfd = [];	// spacing between the fixed parameters
 
 // width of the holder - optional
-wh=0;	// total width of the holder
+wh=107;	// total width of the holder
 
 // height of the holder - set either variable
 hh=57;	// total height of the holder
@@ -44,7 +44,7 @@ ha=0;	// angle of the cards in the holder (in degrees, over 45 degrees for)
 
 // divider
 dividers = false;
-d=1.6;	// thickness of the divider
+d=3;	// thickness of the divider
 dsh=20;	// height of the divider slot
 dsl=1;	// divider slot leeway
 dg=15;	// divider gap / spacing
@@ -74,7 +74,7 @@ l = lh > 0	// calculated total length of the holder
 		? lw + lc + cos(a)*csw + lw
 		: lw + ([for(p=lfd) 1]*lfd + (len(lfd)-1)*d)/sin(a) + cos(a)*csw + lw;
 w = wh > 0 ? wh : wt + csl + wt;	// calculated total width of the holder
-ww = wh == 0 ? wt : (wh - csw)/2;	// calculated wall thickness for the sides
+ww = wh == 0 ? wt : (wh - csl)/2;	// calculated wall thickness for the sides
 cl = lc > 0 ? lc : l-lw-cos(a)*csw-lw;	// calculated total length of the card compartment
 rhombus_faces = [[0,1,2,3],[4,5,1,0],[7,6,5,4],[5,6,2,1],[6,7,3,2],[7,4,0,3]];	// faces for the rhombus polyhedrons
 
