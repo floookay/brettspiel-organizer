@@ -10,8 +10,9 @@
  * - needed space for the cards (either with fixed, variable or no dividers)
  * You can also mix these configurations as you like (choose one per axis).
  *
- * @author Florian Scheibeck <info@floookay.de>
- * @license this code is licensed under the terms of the GNU GPL version 3 (or later)
+ * @author floookay <info@floookay.de>
+ * @source <https://github.com/floookay/brettspiel-organizer/blob/main/allgemein/card-tray.scad>
+ * @license this code is licensed under the terms of GNU GPL version 3 (or later)
  */
 
 // # configuration
