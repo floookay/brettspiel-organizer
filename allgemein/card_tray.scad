@@ -1,5 +1,5 @@
 /**
- * The overall design of the card holder is based on js500's card compartments for
+ * The overall design of the card holder is based on js500's card trays for
  * various board games on printables, e.g. https://www.printables.com/model/449323
  *
  * I rebuilt the card holder from scratch with a parametric design for my own inserts 
@@ -21,19 +21,19 @@ $fn=200;	// for rendering
 // $fn=20;	// for previewing
 
 csl=90;	// card size length (with leeway)
-csw=71;	// card size width (with leeway)
+csw=65;	// card size width (with leeway)
 
 // basic parameters
-r = 3;	// radius of the corners of the holder 
-b = 1.2;	// height of the bottom
+r=3;	// radius of the corners of the holder 
+b=1.2;	// height of the bottom
 lw=5;	// extra thickness on the front and back walls
 wt=1.6;	// thickness of the holder side walls (must be a multiple of the nozzle size)
 cutout = true;	// cutout at the bottom for card retrieval
 
 // length of the holder - set either variable
-lh=0;	// total length of the holder (space for cards will be calculated)
+lh=150;	// total length of the holder (space for cards will be calculated)
 lc=0;	// space for the cards (total length of the holder will be calculated)
-lfd = [10,10,10,9,5,100];	// spacing between the fixed parameters (height of the card stack on a desk (with leeway))
+lfd=[];	// spacing between the fixed parameters (height of the card stack on a desk (with leeway))
 
 // width of the holder - optional
 wh=0;	// total width of the holder
@@ -43,7 +43,7 @@ hh=57;	// total height of the holder
 ha=0;	// angle of the cards in the holder (in degrees, over 45 degrees for)
 
 // divider
-dividers = false;
+dividers=false;
 d=3;	// thickness of the divider (measured horizontally = multiple of the nozzle size)
 dsh=20;	// height of the divider slot
 dsl=1;	// divider slot leeway
@@ -65,6 +65,7 @@ echo(angle=a);
 // # modeling
 // you don't have to change anything below here if you just want to generate some card holders
 // if you want to further customize the card holders, start here
+// the variable names are shortened to minimize clutter but each one has a short description
 // size calculations
 h = hh > 0 ? hh : sin(ha)*csw+b;	// calculated total height of the holder
 a = ha > 0 ? ha : asin((h-b)/csw);	// calculated angle for the cards (based on the available vertical space)
