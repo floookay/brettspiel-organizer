@@ -30,7 +30,7 @@ module operator_profiles() {
 //     cube([200,box/2,100]);
 //     operator_profiles();
 // }
-// operator_profiles();
+operator_profiles();
 
 xr = 228-x_op-0.5;
 echo(xr);
@@ -84,32 +84,40 @@ module player_tray() {
         translate(v = [-1,w,-1]) cube([xr+2,y_pt,z/2+2]);
     }
 }
-// translate(v = [x_op,box-y_pt,0]) player_tray();
+translate(v = [x_op,box-y_pt,0]) player_tray();
 // translate(v = [x_op,box-y_pt,0]) cube_rounded(v=[xr,y_pt,z/2], r=rl);
 
 module setup_defender() {
-    // todo
     y = box-y_pt;
     difference() {
-        cube_rounded(v=[xr,y,z/2], r=rl);
+        union() {
+            difference() {
+                cube_rounded(v=[xr,y,z/2], r=rl);
+                translate(v = [w,w,b]) cube_rounded([xr-2*w,y-2*w,z/2], r=rl-w);
+                // grab
+                translate(v = [xro_grab,y-w,-1]) cylinder(h = z/2+2, r = r_grab);
+            }
+            // grab
+            translate(v = [xro_grab,y-w,0]) difference() {
+                cylinder(h = z/2, r = r_grab+w);
+                cylinder(h = z/2, r = r_grab);
+                translate(v = [-r_grab-10,0,0]) cube([r_grab*2+20,r_grab+10,z/2]);
+            }
+            // fix top side piece
+            difference() {
+                cube_rounded(v=[xr,y,z/2], r=rl);
+                translate(v = [-1,-w,-1]) cube([xr+2,y,z/2+2]);
+            }
+        }
         // bottom cutout
         x_bc = 156.9-x_op-0.5;
         translate(v = [x_bc,38,-1]) cube([3.2+1,54,16+1]);
-        // cameras
-        // y_sdc = y-2*w-r_grab-w
-        translate(v = [xr-w-60,w,b]) cube_rounded([60,75,30], r=rl-w);
-        // grab
-        translate(v = [xro_grab,y-w,-1]) cylinder(h = 100, r = r_grab);
-    }
-    // fix top side piece
-    difference() {
-        cube_rounded(v=[xr,y,z/2], r=rl);
-        translate(v = [-1,-w,-1]) cube([xr+2,y,z/2+2]);
     }
 }
-// translate(v = [x_op,0,0]) setup_defender();
+translate(v = [x_op,0,0]) setup_defender();
 
 module setup_attacker() {
+    setup_defender();
 }
 
 xlo_grab = xl/2;
@@ -145,7 +153,7 @@ module mission_prep() {
     // fixation
     translate(v = [w+32+w+0.8,w+65+w+1,z_mp]) cylinder(h = 3, r = 3.8);
 }
-// translate(v = [-xl,0,0]) mission_prep();
+translate(v = [-xl,0,0]) mission_prep();
 
 
 module general_prep() {
@@ -166,7 +174,7 @@ module general_prep() {
         }
     }
 }
-// translate(v = [-xl,0,z_mp]) general_prep();
+translate(v = [-xl,0,z_mp]) general_prep();
 
 y_sgfs = box-y_mp;
 module smoke_gas_fire_standees() {
