@@ -1,17 +1,13 @@
 include <config.scad>
 
-$fn=200;
+$fn=200; // increase for rendering
 
 b = 2;
 z = b + 22;
-w = 3.2;
 rl = 6;
 
 xf = 20;
 yf = 3;
-
-r_grab = 18.6;
-
 
 module two_standees(height_standee_plus=26, width_standee_plus=26.5, border_mode=false) {
     r0 = 0.5;
@@ -323,10 +319,10 @@ module attacker_operators() {
             translate(v = [0,0,0]) cube_rounded(v = [32,32,z], r=1);
             translate(v = [32/2,0,5]) sphere(r = 9);
         }
-        translate(v = [x_osg2,y_osg1,z-5]) union() {
-            translate(v = [32/2,32,5]) sphere(r = 9);
+        translate(v = [x_osg2,y_osg1,z-7]) union() {
+            translate(v = [32/2,32,5]) hull() { translate(v = [0,0,10]) sphere(r = 9); sphere(r = 9); }
             translate(v = [0,0,0]) cube_rounded(v = [32,32,z], r=1);
-            translate(v = [32/2,0,5]) sphere(r = 9);
+            translate(v = [32/2,0,5]) hull() { translate(v = [0,0,10]) sphere(r = 9); sphere(r = 9); }
         }
         translate(v = [x_osg1,y_osg2,z-5]) union() {
             translate(v = [32/2,32,5]) sphere(r = 9);

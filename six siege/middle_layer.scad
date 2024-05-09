@@ -1,15 +1,12 @@
 include <config.scad>
 
-$fn=200;
+$fn=20; // increase for rendering
 
-b = 2;  // bottom
 z = b + 50 + 2;
 rl = 6;
 c = 0.5;
 or = operator_rn + c;
 zl = 3.6;
-
-w = 3.2;
 
 
 x_op = w+120+1+w;
@@ -37,7 +34,6 @@ echo(xr);
 xl = box-x_op-xr;
 y_pt = w+140+w+10+w;   // w+y_lt+w+y_at+w
 xro_grab = xr/2-2.5;
-r_grab = 18.6;
 module player_tray() {
     difference() {
         cube_rounded(v=[xr,y_pt,z/2], r=rl);
