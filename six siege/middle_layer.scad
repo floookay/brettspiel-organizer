@@ -8,6 +8,19 @@ c = 0.5;
 or = operator_rn + c;
 zl = 3.6;
 
+operator_profiles();
+translate(v = [x_op,box-y_pt,0]) player_tray();
+translate(v = [x_op,0,0]) setup_defender();
+translate(v = [-xl,0,0]) mission_prep();
+translate(v = [-xl,0,z_mp]) general_prep();
+translate(v = [-xl,y_mp,0]) smoke_gas_fire_standees();
+
+// intersection() {
+//     translate(v = [0,box/2,0])
+//     cube([200,box/2,100]);
+//     operator_profiles();
+// }
+// translate(v = [x_op,box-y_pt,0]) cube_rounded(v=[xr,y_pt,z/2], r=rl);    // player tray dummy cube
 
 x_op = w+120+1+w;
 module operator_profiles() {
@@ -22,12 +35,6 @@ module operator_profiles() {
         translate(v = [w+120/2,(box-y)/2+90/2+90+90+1,-1]) cylinder(h = 2*b, r = 35);
     }
 }
-// intersection() {
-//     translate(v = [0,box/2,0])
-//     cube([200,box/2,100]);
-//     operator_profiles();
-// }
-operator_profiles();
 
 xr = 228-x_op-0.5;
 echo(xr);
@@ -80,8 +87,6 @@ module player_tray() {
         translate(v = [-1,w,-1]) cube([xr+2,y_pt,z/2+2]);
     }
 }
-translate(v = [x_op,box-y_pt,0]) player_tray();
-// translate(v = [x_op,box-y_pt,0]) cube_rounded(v=[xr,y_pt,z/2], r=rl);
 
 module setup_defender() {
     y = box-y_pt;
@@ -110,7 +115,6 @@ module setup_defender() {
         translate(v = [x_bc,38,-1]) cube([3.2+1,54,16+1]);
     }
 }
-translate(v = [x_op,0,0]) setup_defender();
 
 module setup_attacker() {
     setup_defender();
@@ -149,7 +153,6 @@ module mission_prep() {
     // fixation
     translate(v = [w+32+w+0.8,w+65+w+1,z_mp]) cylinder(h = 3, r = 3.8);
 }
-translate(v = [-xl,0,0]) mission_prep();
 
 
 module general_prep() {
@@ -170,7 +173,6 @@ module general_prep() {
         }
     }
 }
-translate(v = [-xl,0,z_mp]) general_prep();
 
 y_sgfs = box-y_mp;
 module smoke_gas_fire_standees() {
@@ -203,4 +205,3 @@ module smoke_gas_fire_standees() {
         translate(v = [xl-3.2-1,0,-1]) cube([3.2+1+1,54+w,18]);
     }
 }
-translate(v = [-xl,y_mp,0]) smoke_gas_fire_standees();

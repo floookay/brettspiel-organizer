@@ -9,6 +9,11 @@ rl = 6;
 xf = 20;
 yf = 3;
 
+translate(v = [x_rs,0,0]) breach_standees();
+reinforcement_standees();
+translate(v = [0,y_rs,0]) defender_operators();
+translate(v = [x_rs,y_b,0]) attacker_operators();
+
 module two_standees(height_standee_plus=26, width_standee_plus=26.5, border_mode=false) {
     r0 = 0.5;
     b = 2;
@@ -79,7 +84,6 @@ module breach_standees() {
         }
     }
 }
-// translate(v = [x_rs,0,0]) breach_standees();
 
 x_rs = box-x_b;
 y_rs = 127;
@@ -187,7 +191,6 @@ module reinforcement_standees() {
         }
     }
 }
-// reinforcement_standees();
 
 module defender_operators() {
     x = x_rs;
@@ -288,7 +291,6 @@ module defender_operators() {
         }
     }
 }
-// translate(v = [0,y_rs,0]) defender_operators();
 
 y_b=156;    // slightly shorter 0.4mm
 module attacker_operators() {
@@ -319,11 +321,6 @@ module attacker_operators() {
             translate(v = [0,0,0]) cube_rounded(v = [32,32,z], r=1);
             translate(v = [32/2,0,5]) sphere(r = 9);
         }
-        translate(v = [x_osg2,y_osg1,z-7]) union() {
-            translate(v = [32/2,32,5]) hull() { translate(v = [0,0,10]) sphere(r = 9); sphere(r = 9); }
-            translate(v = [0,0,0]) cube_rounded(v = [32,32,z], r=1);
-            translate(v = [32/2,0,5]) hull() { translate(v = [0,0,10]) sphere(r = 9); sphere(r = 9); }
-        }
         translate(v = [x_osg1,y_osg2,z-5]) union() {
             translate(v = [32/2,32,5]) sphere(r = 9);
             translate(v = [0,0,0]) cube_rounded(v = [32,32,z], r=1);
@@ -333,23 +330,27 @@ module attacker_operators() {
             translate(v = [x_osg1,y_osg1,z-5]) translate(v = [32/2,0,5]) sphere(r = 9);
             translate(v = [x_osg1,y_osg2,z-5]) translate(v = [32/2,32,5]) sphere(r = 9);
         }
+        translate(v = [x_osg2+25-3,y_osg1+(32-28.5)-3,z-7]) rotate([0,0,50]) union() {
+            translate(v = [28.5/2,28.5,5]) hull() { translate(v = [0,0,10]) sphere(r = 9); sphere(r = 9); }
+            translate(v = [0,0,0]) cube_rounded(v = [28.5,28.5,z], r=1);
+            translate(v = [28.5/2,0,5]) hull() { translate(v = [0,0,10]) sphere(r = 9); sphere(r = 9); }
+        }
         // round special tokens
-        y_st = 53;
-        xo_st = -20;
-        translate(v=[x-w-x_hw-w-20/2-0.5,80,z-2-3]) difference() {
+        translate(v=[x-w-20/2-0.5,w+x_gs+w+(20/2+0.5),z-2-3]) difference() {
             cylinder(h = 6, r = 20/2+0.5);
             difference() {
                 cylinder(h = 2, r = 20/2+0.5-3);
                 translate(v = [-20,5,0]) cube([40,20,20]);
             }
         }
-        translate(v=[w+32+w+(20/2+0.5),w+y_lfo+w+(20/2+0.5),z-2-3]) difference() {
+        translate(v=[w+x_lfo+w+(20/2+0.5),w+x_gs+w+(20/2+0.5),z-2-3]) difference() {
             cylinder(h = 6, r = 20/2+0.5);
             difference() {
                 cylinder(h = 2, r = 20/2+0.5-3);
                 translate(v = [-20,5,0]) cube([40,20,20]);
             }
         }
+        translate(v = [w+x_lfo+w+(20/2+0.5)+8,w+x_gs+w+(20/2+0.5)-5,z-2-3]) cube([4,10,z]);
         // holed walls
         x_hw = 20.6;
         y_hw = 74.4;
@@ -357,10 +358,20 @@ module attacker_operators() {
         // gravel standees
         translate(v = [w+x_lfo+w,w,b]) cube_rounded(v = [x-w-x_lfo-w-w,x_gs,z], r=rl-w);
         // grab hole
-        translate(v = [w+x_lfo+w+y_gs/2,w+x_gs+w,-1]) difference() {
-            cylinder(h = z+2, r = r_grab);
+        y_gh = 79;
+        x_gh = 60.3;
+        translate(v = [x_gh,y_gh,-1]) rotate([0,0,-90]) difference() {
+            cylinder(h = z+2, r = r_grab-1);
             translate(v = [-20,-40,0]) cube([40,40,z+2]);
         }
+        translate(v = [x_gh-w,y_gh,-1]) rotate([0,0,90]) difference() {
+            cylinder(h = z+2, r = r_grab-1);
+            translate(v = [-20,-40,0]) cube([40,40,z+2]);
+        }
+        // translate(v = [w+x_lfo+w+y_gs/2,w+x_gs+w,-1]) difference() {
+        //     cylinder(h = z+2, r = r_grab);
+        //     translate(v = [-20,-40,0]) cube([40,40,z+2]);
+        // }
     }
     // gravel standees
     translate(v = [w+x_lfo+w+2,x_gs+w,b]) rotate(a = -90, v = [0,0,1]) difference() {
@@ -368,4 +379,3 @@ module attacker_operators() {
         two_standees(height_standee_plus=y_gs-2*2-2, width_standee_plus=x_gs,border_mode=false);
     }
 }
-translate(v = [x_rs,y_b,0]) attacker_operators();

@@ -10,6 +10,23 @@ c = 0.5;
 or = operator_rn + c;
 zl = 3.6;
 
+attacker();
+attacker_lid();
+translate(v = [0,y_attacker,0]) defender();
+translate(v = [0,y_attacker,0]) defender_lid();
+
+// intersection() {
+//     cube([box/2,200,100]);
+//     // attacker();
+//     attacker_lid();
+// }
+// intersection() {
+//     // translate(v = [box/2,0,0])
+//     cube([box/2,200,100]);
+//     defender();
+//     // defender_lid();
+// }
+// blocker();
 
 module attacker() {
     difference() {
@@ -84,16 +101,6 @@ module operator_token() {
     }
 }
 
-attacker();
-attacker_lid();
-
-// intersection() {
-//     cube([box/2,200,100]);
-//     // attacker();
-//     attacker_lid();
-// }
-
-
 module defender() {
     difference() {
         cube_rounded(v=[box,y_defender,z], r=rl);
@@ -161,15 +168,6 @@ module defender_lid() {
         }
     }
 }
-translate(v = [0,y_attacker,0]) defender();
-translate(v = [0,y_attacker,0]) defender_lid();
-
-// intersection() {
-//     // translate(v = [box/2,0,0])
-//     cube([box/2,200,100]);
-//     defender();
-//     // defender_lid();
-// }
 
 module blocker() {
     z = 1.8;
@@ -180,4 +178,3 @@ module blocker() {
         translate(v = [0,0,-z/2]) cube([t-2*r+0.5,t-2*r+0.5,z], center=true);
     }
 }
-// blocker();
