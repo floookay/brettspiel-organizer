@@ -1,6 +1,8 @@
-//$fn = 100;   // for rendering
+// $fn = 100;   // for rendering
 $fn = 20;   // for previewing
 assembly=true;
+
+double_layer=true;
 
 // cards
 card_w = 64;
@@ -373,6 +375,32 @@ module forest_hex_1_pattern(){
     }
 }
 
+module lid(doublelayer=true) {
+    h = doublelayer ? 1 : 18.5-12.5;
+    lid_h = 17 + h;
+    lid_w = resource_w;
+    lid_l = box_l-box_clearance_l;
+    difference() {
+        union() {
+            v = [lid_l, lid_w, h];
+            r = 3;
+            translate([r,r,0])
+            union(){
+                cylinder(h = v[2], r = r);
+                translate(v = [0,v[1]-2*r,0]) cylinder(h = v[2], r = r);
+                translate(v = [v[0]-2*r,v[1]-2*r,0]) cylinder(h = v[2], r = r);
+                translate(v = [v[0]-2*r,0,0]) cylinder(h = v[2], r = r);
+                translate(v = [-r,0,0]) cube([v[0],v[1]-2*r,v[2]]);
+                translate(v = [0,-r,0]) cube([v[0]-2*r,v[1],v[2]]);
+            }
+            cube_rounded(v = [34,lid_w,lid_h-5]);
+            cube_rounded(v = [34,lid_w-45,lid_h]);
+            translate(v = [0,lid_w-45,0]) cube_rounded(v = [lid_l,45,lid_h-5]);
+        }
+        translate(v = [2,2,4]) cube_rounded(v = [34-2*2,lid_w-45-2*2,lid_h]);
+    }
+}
+
 // assembly
 if(assembly){
     color("darkorange") card_box();
@@ -385,4 +413,5 @@ if(assembly){
     color("midnightblue") translate([card_box_l-resource_l-player_tray_l-phase_tray_l,card_box_w,crisis_tray_h]) phase_tray();
     color("khaki") translate([card_box_l-resource_l-player_tray_l-phase_tray_l-discovery_tray_l,card_box_w,crisis_tray_h]) discovery_tray();
     color("salmon") translate([card_box_l-resource_l-player_tray_l-phase_tray_l-discovery_tray_l,card_box_w,crisis_tray_h+discovery_tray_h]) forest_tray();
+    color("green") translate([0,card_box_w,card_box_h]) lid(double_layer);
 }
