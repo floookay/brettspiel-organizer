@@ -10,7 +10,7 @@ trayslot_x=deckel_x/2;
 minitray_x=trayslot_x-trayslot_b;
 minitray_z=4;
 
-magnet_z=5;
+magnet_z=5*5;
 
 // minitray(left=false);
 doublerail();
@@ -56,7 +56,7 @@ module doublerail() {
         translate(v = [-20,-1,-1]) cube([40,11,deckel_z+2]);
         d=(deckel_z)/5.3;
         for (i=[0:4]) {
-            translate(v = [-10,-2,i*d+30]) cube([20,11+2,magnet_z]);
+            translate(v = [-10,-2,i*d+20]) cube([20,11+2,magnet_z]);
         }
     }
 }
