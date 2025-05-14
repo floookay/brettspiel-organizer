@@ -1,4 +1,5 @@
-$fn = 200;
+$fn = 20;
+// $fn = 200;
 
 box=285;
 boxz=72;
@@ -30,14 +31,14 @@ module box() {
 		cube([box,box,boxz+1]);
 	}
 }
-// box();
+box();
 
 module cards_full_placeholder(y) {
 	color("lightblue") cube([cardsx,y,cardsz]);
 }
-// translate([box-cardsx,box-cardsy,0]) cards_full_placeholder(cardsy);
-// translate([box-cardsx,box-cardsy-0.5-cardsy,0]) cards_full_placeholder(cardsy);
-// translate([box-cardsx,box-cardsy-0.5-cardsy-0.5-cardsy,0]) cards_full_placeholder(cardsy);
+translate([box-cardsx,box-cardsy,0]) cards_full_placeholder(cardsy);
+translate([box-cardsx,box-cardsy-0.5-cardsy,0]) cards_full_placeholder(cardsy);
+translate([box-cardsx,box-cardsy-0.5-cardsy-0.5-cardsy,0]) cards_full_placeholder(cardsy);
 
 module misc_drawer() {
 	color("lightyellow") difference() {
@@ -46,12 +47,12 @@ module misc_drawer() {
 		translate([miscx/2,w_min,0]) rotate([-90,0,0]) cylinder(h=miscy-2*w_min, r=20);
 	}
 }
-// misc_drawer();
+misc_drawer();
 
 miscz_player = 11;
-miscz_duell = 20;
+miscz_duet = 20;
 miscz_token = 20;
-miscz_eggs = miscyi-miscz_player-miscz_duell-miscz_token-0.4-1;
+miscz_eggs = miscyi-miscz_player-miscz_duet-miscz_token-0.4-1;
 
 module misc_player() {
 	color("lightgreen") difference() {
@@ -73,37 +74,37 @@ module misc_player() {
 		}
 	}
 }
-// translate([0,miscz_player,0])
-// translate([w_min,w_min,w_min]) rotate([90,0,0])
-// misc_player();
+translate([0,miscz_player,0])
+translate([w_min,w_min,w_min]) rotate([90,0,0])
+misc_player();
 
-module misc_duell() {
+module misc_duet() {
 	color("white") difference() {
 		union() {
 			difference() {
-				cube_rounded([miscxi,misczi,miscz_duell], r=1);
+				cube_rounded([miscxi,misczi,miscz_duet], r=1);
 				offset=2;
 				yingyangr=misczi-2*w_min-offset;
-				translate([w_min,w_min,w_min]) tray_rounded([miscxi-2*w_min,misczi-2*w_min,miscz_duell]);
+				translate([w_min,w_min,w_min]) tray_rounded([miscxi-2*w_min,misczi-2*w_min,miscz_duet]);
 			}
 			seperatorr=(misczi+w_min)/4;
 			translate(v = [miscxi/2,seperatorr,0])
 			difference() {
-				cylinder(h = miscz_duell, r = seperatorr);
-				cylinder(h = miscz_duell, r = seperatorr-w_min);
+				cylinder(h = miscz_duet, r = seperatorr);
+				cylinder(h = miscz_duet, r = seperatorr-w_min);
 				translate(v = [-100,-100,0]) cube([100,200,100]);
 			}
 			translate(v = [miscxi/2,seperatorr*3-w_min,0]) rotate([0,0,180]) difference() {
-				cylinder(h = miscz_duell, r = seperatorr);
-				cylinder(h = miscz_duell, r = seperatorr-w_min);
+				cylinder(h = miscz_duet, r = seperatorr);
+				cylinder(h = miscz_duet, r = seperatorr-w_min);
 				translate(v = [-100,-100,0]) cube([100,200,100]);
 			}
 		}
 		iconr=10;
-		translate([miscxi/2+2,0.8,miscz_duell/2]) rotate([90,0,0]) ying_yang(iconr,iconr);
-		translate([miscxi/2-2,0.8,miscz_duell/2]) rotate([90,0,0]) rotate([0,0,180]) ying_yang(iconr,iconr);
-		translate([0,misczi+iconr-2*0.8,0]) translate([miscxi/2+2,0.8,miscz_duell/2]) rotate([90,0,0]) ying_yang(iconr,iconr);
-		translate([0,misczi+iconr-2*0.8,0]) translate([miscxi/2-2,0.8,miscz_duell/2]) rotate([90,0,0]) rotate([0,0,180]) ying_yang(iconr,iconr);
+		translate([miscxi/2+2,0.8,miscz_duet/2]) rotate([90,0,0]) ying_yang(iconr,iconr);
+		translate([miscxi/2-2,0.8,miscz_duet/2]) rotate([90,0,0]) rotate([0,0,180]) ying_yang(iconr,iconr);
+		translate([0,misczi+iconr-2*0.8,0]) translate([miscxi/2+2,0.8,miscz_duet/2]) rotate([90,0,0]) ying_yang(iconr,iconr);
+		translate([0,misczi+iconr-2*0.8,0]) translate([miscxi/2-2,0.8,miscz_duet/2]) rotate([90,0,0]) rotate([0,0,180]) ying_yang(iconr,iconr);
 	}
 }
 module ying_yang(r,h){
@@ -120,9 +121,9 @@ module ying_yang(r,h){
 		}
 	}
 }
-// translate([0,miscz_player+miscz_duell,0])
-// translate([w_min,w_min,w_min]) rotate([90,0,0])
-// misc_duell();
+translate([0,miscz_player+miscz_duet,0])
+translate([w_min,w_min,w_min]) rotate([90,0,0])
+misc_duet();
 
 module misc_tokens(){
 	color("yellow") difference() {
@@ -147,9 +148,9 @@ module icontoken(x) {
 		}
 	}
 }
-// translate([0,miscz_player+miscz_duell+miscz_token,0])
-// translate([w_min,w_min,w_min]) rotate([90,0,0])
-// misc_tokens();
+translate([0,miscz_player+miscz_duet+miscz_token,0])
+translate([w_min,w_min,w_min]) rotate([90,0,0])
+misc_tokens();
 
 module misc_eggs(){
 	color("orange") difference() {
@@ -162,8 +163,8 @@ module misc_eggs(){
 		// translate([miscxi/2,misczi+cubex/2-0.8,miscz_token/2]) icontoken(cubex);
 	}
 }
-// translate([0,miscz_player+miscz_duell+miscz_token+miscz_eggs,0])
-// translate([w_min,w_min,w_min]) rotate([90,0,0])
+translate([0,miscz_player+miscz_duet+miscz_token+miscz_eggs,0])
+translate([w_min,w_min,w_min]) rotate([90,0,0])
 misc_eggs();
 
 etcy=box-cardsy-cardsy-1;
@@ -196,7 +197,7 @@ module etc_cards() {
 		translate([x_min+cardl+w_min,etcy-w_min-cardw,w_min]) cube([spacex,cardw+w_min,cardsz]);
 	}
 }
-// translate([miscx+1,0,0]) etc_cards();
+translate([miscx+1,0,0]) etc_cards();
 
 module etc_drawer() {
 	x_min = w_min;
@@ -210,7 +211,7 @@ module etc_drawer() {
 		translate([w_min,w_min,w_min]) tray_rounded([x-2*w_min,y-2*w_min,z], r=r);
 	}
 }
-// etc_drawer();
+etc_drawer();
 
 module etc_food1() {
 	// worms, berries, crop
@@ -223,7 +224,7 @@ module etc_food1() {
 		}
 	}
 }
-// translate([miscx+1+w_min,w_min,w_min]) etc_food1();
+translate([miscx+1+w_min,w_min,w_min]) etc_food1();
 
 module etc_food2() {
 	// fish, mouse, nectar
@@ -237,7 +238,7 @@ module etc_food2() {
 		translate([w_min+smalltrayx+w_min+smalltrayx+w_min,w_min,w_min]) tray_rounded([largetrayx,ytray,20],r=5);
 	}
 }
-// translate([miscx+1+w_min,w_min,w_min+foodzd]) etc_food2();
+translate([miscx+1+w_min,w_min,w_min+foodzd]) etc_food2();
 
 module etc_lid() {
 	difference() {
@@ -246,7 +247,7 @@ module etc_lid() {
 		translate([w_min,w_min,w_min]) cube([cardsx-2*w_min,foody,cardsz-2*w_min]);
 	}
 }
-// translate([miscx+1,0,0]) etc_lid();
+translate([miscx+1,0,0]) etc_lid();
 
 // helpers
 module cube_rounded(v, r=3, center=false){
