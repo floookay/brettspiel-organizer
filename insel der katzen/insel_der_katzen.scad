@@ -68,7 +68,7 @@ module treasure_lid(t=5) {
 // treasure_lid();
 
 module cube_rounded2(v, r=2, center=false){
-    translate([0,v[1],0]) rotate([90,0,0]) cube_rounded([v[0],v[2],v[1]]);
+    translate([0,v[1],0]) rotate([90,0,0]) cube_rounded([v[0],v[2],v[1]], r = r);
 }
 
 module cube_rounded(v, r=2, center=false){
