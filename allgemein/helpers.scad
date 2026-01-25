@@ -10,7 +10,7 @@ module cube_rounded(v, r=3, center=false){
     }
 }
 module tray_rounded(v, r=3, center=false){
-    translate(center==true ? [r-v[0]/2,r-v[1]/2,v[2]/2] : [r,r,0])
+    translate(center==true ? [r-v[0]/2,r-v[1]/2,-v[2]/2] : [r,r,0])
     translate(v = [0,0,r]) hull(){
         cylinder(h = v[2]-r, r = r);
         sphere(r = r);
